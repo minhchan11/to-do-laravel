@@ -27,11 +27,3 @@ Route::get('/hello', function () {
 });
 
 Route::resource('tasks', 'TasksController');
-
-//  * Delete An Existing Task
-//  */
-//  Route::delete('/task/{id}', function ($id) {
-//      Task::findOrFail($id)->delete();
-//
-//      return redirect('/');
-//  });
