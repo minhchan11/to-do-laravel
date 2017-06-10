@@ -1,5 +1,6 @@
 <?php
-
+use todo\Task;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +11,55 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+require_once __DIR__."/../app/Task.php";
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('role', [
+  'middleware' => 'Role:test role',
+  'uses' => 'TestController@index',
+]);
+/**
+ * Display All Tasks
+ */
+Route::get('/hello', function () {
+    return view('hello', [
+      'name' => 'Minh'
+    ]);
 });
+
+Route::get('/tasks', function () {
+  $tasks = Task::orderBy('created_at', 'asc')->get();
+
+ return view('tasks', [
+     'tasks' => $tasks
+ ]);
+});
+/**
+ * Add A New Task
+ */
+ Route::post('/task', function (Request $request) {
+     $validator = Validator::make($request->all(), [
+         'name' => 'required|max:255|min:3',
+     ]);
+
+     if ($validator->fails()) {
+         return redirect('/')
+             ->withInput()
+             ->withErrors($validator);
+     }
+
+     $task = new Task;
+     $task->name = $request->name;
+     $task->save();
+
+     return redirect('/');
+ });
+
+
+/**
+ * Delete An Existing Task
+ */
+ Route::delete('/task/{id}', function ($id) {
+     Task::findOrFail($id)->delete();
+
+     return redirect('/');
+ });
