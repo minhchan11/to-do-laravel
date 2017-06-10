@@ -6,3 +6,4 @@
 composer dump-autoload
 php artisan db:seed or
 php artisan migrate:refresh --seed
+php artisan make:controller PhotoController --resource --model=Photo
