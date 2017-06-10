@@ -7,3 +7,6 @@ composer dump-autoload
 php artisan db:seed or
 php artisan migrate:refresh --seed
 php artisan make:controller PhotoController --resource --model=Photo
+php artisan make:model Project
+php artisan tinker <--- help to directly check database
+App\Project::count();
