@@ -27,7 +27,7 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -38,7 +38,11 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $task = new Task;
+      $task->name = $request->name;
+      $task->save();
+
+      return redirect('/tasks');
     }
 
     /**
@@ -83,6 +87,7 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Task::findOrFail($id)->delete();
+      return redirect('/tasks');
     }
 }

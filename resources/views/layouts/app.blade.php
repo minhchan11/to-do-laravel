@@ -10,8 +10,8 @@
             <nav class="navbar navbar-default">
                 <!-- Navbar Contents -->
             </nav>
-        </div>
-        @yield('content')
+            @yield('content')
+    </div>
     </body>
   </body>
 </html>
