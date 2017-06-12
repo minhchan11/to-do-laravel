@@ -27,3 +27,7 @@ Route::get('/hello', function () {
 });
 
 Route::resource('tasks', 'TasksController');
+
+Route::get('/', function () {
+    return view('welcome');
+});

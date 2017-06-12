@@ -13,11 +13,22 @@ class CreateTask extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->default('');
+            $table->string('slug')->default('');
             $table->timestamps();
         });
+
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('name')->default('');
+            $table->string('slug')->default('');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -27,6 +38,7 @@ class CreateTask extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('categories');
         Schema::dropIfExists('tasks');
     }
 }
