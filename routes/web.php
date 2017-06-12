@@ -26,8 +26,21 @@ Route::get('/hello', function () {
     ]);
 });
 
-Route::resource('tasks', 'TasksController');
+Route::model('tasks', 'Task');
+Route::model('categories', 'Category');
+// Route::resource('tasks', 'TasksController'); this is normal route, may be used for many to many
+Route::resource('categories', 'CategoriesController');
+Route::resource('categories.tasks', 'TasksController'); // establish one to many relationship
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+//Change the URL segments
+Route::bind('tasks', function($value, $route) {
+	return App\Task::whereSlug($value)->first();
+});
+Route::bind('categories', function($value, $route) {
+	return App\Category::whereSlug($value)->first();
 });
