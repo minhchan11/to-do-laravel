@@ -30,7 +30,11 @@
                             </td>
 
                             <td>
-                                   <button type="submit" class="btn btn-danger">Delete Category</button>
+                              <a href="{{ route('categories.edit', $category->slug) }}" class="btn btn-info"> Edit</a>
+                              <form action="categories.destroy" method="post">
+                                <input name="_method" type="hidden" value="delete" />
+                                <button type="submit" class="btn btn-danger">Delete Category</button>
+                              </form>
                            </td>
                         </tr>
                     @endforeach
@@ -39,4 +43,6 @@
         </div>
     </div>
     @endif
+    <a href="{{ route('categories.create') }}" class="btn btn-block btn-success"> Create new category</a>
+    </p>
 @endsection
