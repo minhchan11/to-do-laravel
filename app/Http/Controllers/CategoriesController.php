@@ -3,8 +3,9 @@
 namespace todo\Http\Controllers;
 
 use Illuminate\Http\Request;
-use todo\Http\Request;
+// use todo\Http\Request;
 use todo\Category;
+use todo\Task;
 use todo\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
@@ -49,6 +50,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
+        // $category = Category::with('tasks')->get(); //Prevent N+1 problem
         return view('categories.show', compact('category'));
     }
 

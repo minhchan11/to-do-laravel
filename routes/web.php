@@ -1,5 +1,6 @@
 <?php
 use todo\Task;
+use todo\Category;
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,8 @@ Route::get('/hello', function () {
     ]);
 });
 
-Route::model('tasks', 'Task');
-Route::model('categories', 'Category');
+Route::model('categories.tasks', App\Task::class);
+Route::model('categories',  App\Category::class);
 // Route::resource('tasks', 'TasksController'); this is normal route, may be used for many to many
 Route::resource('categories', 'CategoriesController');
 Route::resource('categories.tasks', 'TasksController'); // establish one to many relationship
@@ -38,9 +39,10 @@ Route::get('/', function () {
 
 
 //Change the URL segments
-Route::bind('tasks', function($value, $route) {
-	return App\Task::whereSlug($value)->first();
-});
-Route::bind('categories', function($value, $route) {
-	return App\Category::whereSlug($value)->first();
-});
+
+// Route::bind('tasks', function($value, $route) {
+// 	return App\Task::whereSlug($value)->first();
+// });
+// Route::bind('categories', function($value, $route) {
+// 	return App\Category::whereSlug($value)->first();
+// });

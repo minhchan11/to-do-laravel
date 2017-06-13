@@ -2,7 +2,10 @@
 namespace todo\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use todo\Http\Request;
 use todo\Task;
+use todo\Category;
+use todo\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {
@@ -14,9 +17,7 @@ class TasksController extends Controller
     public function index()
     {
       $tasks = Task::orderBy('created_at', 'asc')->get();
-     return view('tasks', [
-         'tasks' => $tasks
-     ]);
+     return view('tasks', compact('tasks'));
     }
 
     /**
@@ -24,9 +25,9 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category)
     {
-
+      return view('tasks.create', compact('category'));
     }
 
     /**
@@ -37,14 +38,14 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'name' => 'required|string|min:3',
-      ]);
-      $task = new Task;
-      $task->name = $request->name;
-      $task->save();
-
-      return redirect('/tasks');
+      // $this->validate($request, [
+      //   'name' => 'required|string|min:3',
+      // ]);
+      // $task = new Task;
+      // $task->name = $request->name;
+      // $task->save();
+      //
+      // return redirect('/tasks');
     }
 
     /**
@@ -53,9 +54,9 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category, Task $task)
     {
-        //
+        return view('tasks.show', compact('category','task'));
     }
 
     /**
@@ -64,9 +65,9 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category, Task $task)
     {
-        //
+      return view('tasks.show', compact('category','task'));
     }
 
     /**
