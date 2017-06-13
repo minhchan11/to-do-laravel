@@ -27,9 +27,11 @@
                           <td class="table-text">
                               <div><a href="{{ route('categories.tasks.show', [$category->slug, $task->slug]) }}">{{ $task->name }}</a></div>
                           </td>
-
                           <td>
-                                 <button type="submit" class="btn btn-danger">Delete Category</button>
+                            <a href="{{ route('categories.tasks.edit', [$category->slug, $task->slug]) }}" class="btn btn-info">Edit</a>
+                            {!! Form::open(['route' => ['categories.tasks.destroy', $category->slug,$task->slug], 'method' => 'delete']) !!}
+                            <button type="submit" class="btn btn-danger">Delete Task</button>
+                            {!! Form::close() !!}
                          </td>
                       </tr>
                   @endforeach
@@ -38,4 +40,6 @@
             </table>
         </div>
     </div>
+
+    <a href="{{ route('categories.tasks.create', [$category->slug]) }}" class="btn btn-block btn-success"> Create new task</a>
 @endsection

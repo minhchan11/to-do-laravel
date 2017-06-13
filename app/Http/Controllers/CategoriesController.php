@@ -3,7 +3,6 @@
 namespace todo\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use todo\Http\Request;
 use todo\Category;
 use todo\Task;
 use todo\Http\Controllers\Controller;
@@ -12,6 +11,11 @@ use Redirect;
 
 class CategoriesController extends Controller
 {
+    protected $rules = [
+  		'name' => ['required', 'min:3'],
+  		'slug' => ['required'],
+  	];
+
     /**
      * Display a listing of the resource.
      *
@@ -39,9 +43,10 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-      $input = array_except(Input::all(),'_token');
+      $this->validate($request, $this->rules);
+      $input = Input::all();
       Category::create( $input );
 
       return Redirect::route('categories.index')->with('message', 'Category created');
@@ -77,9 +82,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $category)
+    public function update(Category $category, Request $request)
     {
-      $input = array_except(Input::all(), ['_method','_token']);
+      $this->validate($request, $this->rules);
+      $input = array_except(Input::all(), '_method');
 	    $category->update($input);
 
 	    return Redirect::route('categories.show',        $category->slug)->with('message', 'Project updated.');

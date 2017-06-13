@@ -22,7 +22,7 @@ class CreateTask extends Migration
 
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->default(0);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('name')->default('');
             $table->string('slug')->default('');

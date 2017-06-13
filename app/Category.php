@@ -9,6 +9,8 @@ class Category extends Model
   protected $primaryKey = 'id';
   protected $table = 'categories';
   protected $fillable = array('name', 'slug', 'created_at_ip', 'updated_at_ip');
+  protected $guarded = [];
+
 
   public function tasks()
   {

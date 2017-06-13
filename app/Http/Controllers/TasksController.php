@@ -2,22 +2,32 @@
 namespace todo\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use todo\Http\Request;
 use todo\Task;
 use todo\Category;
 use todo\Http\Controllers\Controller;
+use Input;
+use Redirect;
 
 class TasksController extends Controller
 {
+    protected $rules = [
+      'name' => ['required', 'min:3'],
+      'slug' => ['required'],
+    ];
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function all()
     {
       $tasks = Task::orderBy('created_at', 'asc')->get();
-     return view('tasks', compact('tasks'));
+      return view('tasks.all', compact('tasks'));
+    }
+
+    public function index(Category $category)
+    {
+      return view('tasks.index', compact('category'));
     }
 
     /**
@@ -36,16 +46,15 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Category $category, Request $request)
     {
-      // $this->validate($request, [
-      //   'name' => 'required|string|min:3',
-      // ]);
-      // $task = new Task;
-      // $task->name = $request->name;
-      // $task->save();
-      //
-      // return redirect('/tasks');
+    $this->validate($request, $this->rules);
+
+    $input = Input::all();
+  	$input['category_id'] = $category->id;
+  	Task::create($input);
+
+  	return Redirect::route('categories.show', $category->slug)->with('message', 'Task created.');
     }
 
     /**
@@ -67,7 +76,7 @@ class TasksController extends Controller
      */
     public function edit(Category $category, Task $task)
     {
-      return view('tasks.show', compact('category','task'));
+      return view('tasks.edit', compact('category','task'));
     }
 
     /**
@@ -77,9 +86,12 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Category $category, Task $task)
     {
-        //
+      $input = array_except(Input::all(), '_method');
+      $task->update($input);
+
+      return Redirect::route('categories.tasks.show', [$category->slug, $task->slug])->with('message', 'Task updated.');
     }
 
     /**
@@ -88,9 +100,10 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category, Task $task)
     {
-      Task::findOrFail($id)->delete();
-      return redirect('/tasks');
+      // Task::findOrFail($id)->delete();
+      $task->delete();
+      return Redirect::route('categories.show',$category->slug)->with('message', 'Task Deleted.');
     }
 }

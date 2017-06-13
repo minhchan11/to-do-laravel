@@ -29,7 +29,7 @@ Route::get('/hello', function () {
 
 Route::model('categories.tasks', App\Task::class);
 Route::model('categories',  App\Category::class);
-// Route::resource('tasks', 'TasksController'); this is normal route, may be used for many to many
+Route::get('/tasks', 'TasksController@all'); 
 Route::resource('categories', 'CategoriesController');
 Route::resource('categories.tasks', 'TasksController'); // establish one to many relationship
 
