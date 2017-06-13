@@ -10,11 +10,10 @@
         </div>
 
         <div class="panel-body">
-          <form action="categories.store">
-            {{ method_field('POST') }}
+        {!! Form::model(new todo\Category, ['route' => ['categories.store']]) !!}
             {{ csrf_field() }}
             @include('categories/partials/_form', array('submit' => 'Add Category'))
-          </form>
+        {!! Form::close() !!}
         </div>
     </div>
 

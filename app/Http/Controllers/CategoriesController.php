@@ -39,9 +39,9 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-      $input = Input::all();
+      $input = array_except(Input::all(),'_token');
       Category::create( $input );
 
       return Redirect::route('categories.index')->with('message', 'Project created');
