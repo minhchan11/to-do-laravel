@@ -44,7 +44,7 @@ class CategoriesController extends Controller
       $input = array_except(Input::all(),'_token');
       Category::create( $input );
 
-      return Redirect::route('categories.index')->with('message', 'Project created');
+      return Redirect::route('categories.index')->with('message', 'Category created');
     }
 
     /**
@@ -67,7 +67,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-         return view('categories.show', compact('category'));
+         return view('categories.edit', compact('category'));
     }
 
     /**
@@ -77,9 +77,12 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Category $category)
     {
-        //
+      $input = array_except(Input::all(), ['_method','_token']);
+	    $category->update($input);
+
+	    return Redirect::route('categories.show',        $category->slug)->with('message', 'Project updated.');
     }
 
     /**
@@ -88,8 +91,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+          return Redirect::route('categories.index')->with('message', 'Category deleted');
     }
 }

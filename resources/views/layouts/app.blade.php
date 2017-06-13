@@ -11,6 +11,7 @@
                 <!-- Navbar Contents -->
             </nav>
             @include('common.errors')
+            @include('common.message')
             @yield('content')
     </div>
     </body>

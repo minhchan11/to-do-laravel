@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('common.errors')
 @section('content')
     <h2>Categories</h2>
 
@@ -31,9 +31,10 @@
 
                             <td>
                               <a href="{{ route('categories.edit', $category->slug) }}" class="btn btn-info"> Edit</a>
-                              <form action="categories.destroy" method="post">
-                                <input name="_method" type="hidden" value="delete" />
-                                <button type="submit" class="btn btn-danger">Delete Category</button>
+                              {!! Form::open(['route' => ['categories.destroy', $category->slug], 'method' => 'delete']) !!}
+                                  {{ csrf_field() }}
+                                  <button type="submit" class="btn btn-danger">Delete Category</button>
+                              {!! Form::close() !!}
                               </form>
                            </td>
                         </tr>
