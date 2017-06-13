@@ -8,7 +8,7 @@ class Task extends Model
 {
   protected $primaryKey = 'id';
   protected $table = 'tasks';
-  protected $fillable = array('name', 'slug', 'category_id','created_at_ip', 'updated_at_ip');
+  protected $fillable = array('name', 'slug', 'category_id','created_at_ip', 'updated_at_ip'); // this is important to make SQL query
   protected $guarded = [];
 
 
