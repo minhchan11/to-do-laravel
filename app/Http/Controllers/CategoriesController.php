@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use todo\Category;
 use todo\Task;
 use todo\Http\Controllers\Controller;
+use Input;
+use Redirect;
 
 class CategoriesController extends Controller
 {
@@ -39,7 +41,10 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $input = Input::all();
+      Category::create( $input );
+
+      return Redirect::route('categories.index')->with('message', 'Project created');
     }
 
     /**

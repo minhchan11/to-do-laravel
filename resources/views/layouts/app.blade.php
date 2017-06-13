@@ -10,6 +10,7 @@
             <nav class="navbar navbar-default">
                 <!-- Navbar Contents -->
             </nav>
+            @include('common.errors')
             @yield('content')
     </div>
     </body>
