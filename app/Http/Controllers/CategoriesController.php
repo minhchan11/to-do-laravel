@@ -88,7 +88,7 @@ class CategoriesController extends Controller
       $input = array_except(Input::all(), '_method');
 	    $category->update($input);
 
-	    return Redirect::route('categories.show',        $category->slug)->with('message', 'Project updated.');
+	    return Redirect::route('categories.show',$category->slug)->with('message', 'Project updated.');
     }
 
     /**
